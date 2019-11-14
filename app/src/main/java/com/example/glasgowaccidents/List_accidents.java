@@ -21,9 +21,9 @@ public class List_accidents extends AppCompatActivity {
         setContentView(R.layout.activity_list_accidents);
 
         ArrayList<card_accident_item> exampleList = new ArrayList<>();
-        exampleList.add(new card_accident_item("Line1", "Line1.1", "Line1.2", "Line1.3"));
-        exampleList.add(new card_accident_item("Line2", "Line2.1", "Line2.2", "Line2.3"));
-        exampleList.add(new card_accident_item("Line3", "Line3.1", "Line3.2", "Line3.3"));
+        exampleList.add(new card_accident_item("201897GA00102", "Date : 02/02/2018", "Severity : Slight", "Casualty : 1"));
+        exampleList.add(new card_accident_item("201897GA00107", "Date : 02/02/2018", "Severity : Slight", "Casualty : 1"));
+        exampleList.add(new card_accident_item("201897GA00108", "Date : 02/02/2018", "Severity : Slight", "Casualty : 2"));
 
 
         mRecyclerView = findViewById(R.id.accidents_recyclerView);
