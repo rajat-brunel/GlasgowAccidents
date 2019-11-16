@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         button_landing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Clicked!!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "Clicked!!", Toast.LENGTH_SHORT).show();
 
                 Intent intent_list = new Intent(getApplicationContext(), List_accidents.class);
                 startActivity(intent_list);

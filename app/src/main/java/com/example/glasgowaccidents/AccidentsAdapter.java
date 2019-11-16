@@ -1,11 +1,13 @@
 package com.example.glasgowaccidents;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +17,8 @@ public class AccidentsAdapter extends RecyclerView.Adapter<AccidentsAdapter.Acci
 
     private Context mContext;
     private Cursor mCursor;
+    private OnItemClicked onClick;
+
 
 
     public AccidentsAdapter(Context context, Cursor cursor) {
@@ -55,7 +59,7 @@ public class AccidentsAdapter extends RecyclerView.Adapter<AccidentsAdapter.Acci
                 return;
             }
 
-            String acc_index = mCursor.getString(mCursor.getColumnIndex("Accident_Index"));
+            final String acc_index = mCursor.getString(mCursor.getColumnIndex("Accident_Index"));
             String acc_Date = mCursor.getString(mCursor.getColumnIndex("Date"));
             String acc_severe = mCursor.getString(mCursor.getColumnIndex("Accident_Severity"));
             String acc_cas = mCursor.getString(mCursor.getColumnIndex("Number_of_Casualties"));
@@ -65,6 +69,19 @@ public class AccidentsAdapter extends RecyclerView.Adapter<AccidentsAdapter.Acci
             holder.mTextView2.setText("Date : " + acc_Date);
             holder.mTextView3.setText("Severity : " + acc_severe);
             holder.mTextView4.setText("Casualties : " +acc_cas);
+
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Intent intent = new Intent(mContext, info_accident.class);
+                    intent.putExtra("acc",acc_index);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(intent);
+                    return false;
+                }
+            });
+
+
     }
 
     @Override
@@ -82,5 +99,9 @@ public class AccidentsAdapter extends RecyclerView.Adapter<AccidentsAdapter.Acci
         if (newCursor != null) {
             notifyDataSetChanged();
         }
+    }
+
+    public interface OnItemClicked {
+        void onItemClick(int position);
     }
 }
