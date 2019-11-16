@@ -4,12 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import java.util.ArrayList;
 
 public class List_accidents extends AppCompatActivity {
 
+    private SQLiteDatabase mDatabase;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -20,19 +23,26 @@ public class List_accidents extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_accidents);
 
-        ArrayList<card_accident_item> exampleList = new ArrayList<>();
-        exampleList.add(new card_accident_item("201897GA00102", "Date : 02/02/2018", "Severity : Slight", "Casualty : 1"));
-        exampleList.add(new card_accident_item("201897GA00107", "Date : 02/02/2018", "Severity : Slight", "Casualty : 1"));
-        exampleList.add(new card_accident_item("201897GA00108", "Date : 02/02/2018", "Severity : Slight", "Casualty : 2"));
 
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        mDatabase = dbHelper.getWritableDatabase();
 
         mRecyclerView = findViewById(R.id.accidents_recyclerView);
-        mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new AccidentsAdapter(exampleList);
+        mAdapter = new AccidentsAdapter(this,getItems());
 
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    private Cursor getItems() {
+        return mDatabase.query("table_1",
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
     }
 }

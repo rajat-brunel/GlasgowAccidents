@@ -1,5 +1,7 @@
 package com.example.glasgowaccidents;
 
+import android.content.Context;
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,10 +10,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 
 public class AccidentsAdapter extends RecyclerView.Adapter<AccidentsAdapter.AccidentsViewHolder> {
-    private ArrayList<card_accident_item> mAccidentList;
+
+    private Context mContext;
+    private Cursor mCursor;
+
+
+    public AccidentsAdapter(Context context, Cursor cursor) {
+        mContext = context;
+        mCursor = cursor;
+
+    }
+
 
     public static class AccidentsViewHolder extends RecyclerView.ViewHolder{
 
@@ -29,30 +40,47 @@ public class AccidentsAdapter extends RecyclerView.Adapter<AccidentsAdapter.Acci
         }
     }
 
-    public AccidentsAdapter(ArrayList<card_accident_item> accidentList) {
-            mAccidentList = accidentList;
-    }
 
     @NonNull
     @Override
     public AccidentsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View V = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_item, parent, false);
-        AccidentsViewHolder avh = new AccidentsViewHolder(V);
-        return avh;
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+        View view = inflater.inflate(R.layout.card_item, parent, false);
+        return new AccidentsViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull AccidentsViewHolder holder, int position) {
-            card_accident_item currentItem = mAccidentList.get(position);
+            if (!mCursor.moveToPosition(position)) {
+                return;
+            }
 
-            holder.mTextView1.setText(currentItem.getText1());
-            holder.mTextView2.setText(currentItem.getText2());
-            holder.mTextView3.setText(currentItem.getText3());
-            holder.mTextView4.setText(currentItem.getText4());
+            String acc_index = mCursor.getString(mCursor.getColumnIndex("Accident_Index"));
+            String acc_Date = mCursor.getString(mCursor.getColumnIndex("Date"));
+            String acc_severe = mCursor.getString(mCursor.getColumnIndex("Accident_Severity"));
+            String acc_cas = mCursor.getString(mCursor.getColumnIndex("Number_of_Casualties"));
+
+
+            holder.mTextView1.setText("Index : "+acc_index);
+            holder.mTextView2.setText("Date : " + acc_Date);
+            holder.mTextView3.setText("Severity : " + acc_severe);
+            holder.mTextView4.setText("Casualties : " +acc_cas);
     }
 
     @Override
     public int getItemCount() {
-        return mAccidentList.size();
+        return mCursor.getCount();
+    }
+
+    public void swapCursor(Cursor newCursor) {
+        if (mCursor != null) {
+            mCursor.close();
+        }
+
+        mCursor = newCursor;
+
+        if (newCursor != null) {
+            notifyDataSetChanged();
+        }
     }
 }

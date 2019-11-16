@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+
 
         button_landing = findViewById(R.id.button_landing);
         button_landing.setOnClickListener(new View.OnClickListener() {
