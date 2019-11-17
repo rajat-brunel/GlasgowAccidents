@@ -4,12 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -37,6 +39,9 @@ public class List_accidents extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_accidents);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Accident List");
+        setSupportActionBar(toolbar);
 
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         mDatabase = dbHelper.getWritableDatabase();
@@ -79,6 +84,12 @@ public class List_accidents extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 
     private void pagination(){

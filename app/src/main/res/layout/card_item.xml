@@ -5,19 +5,26 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="4dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="4dp">
+    app:cardCornerRadius="4dp"
+    android:layout_margin="8dp"
+    android:background="#424242"
+    android:elevation="1.5dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="4dp">
+        android:background="#424242"
+        >
 
         <TextView
             android:id="@+id/acc_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Accident 1"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
             android:textSize="20sp"
+            android:textColor="#F5F5F5"
             android:textStyle="bold"
             android:layout_alignParentTop="true">
         </TextView>
@@ -26,6 +33,7 @@
             android:id="@+id/acc_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#9E9E9E"
             android:text="Date"
             android:textSize="14sp"
             android:layout_below="@id/acc_name"
@@ -36,21 +44,25 @@
             android:id="@+id/acc_severity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#9E9E9E"
             android:text="Severity"
             android:textSize="12sp"
             android:layout_below="@+id/acc_date"
-            android:layout_marginStart="8dp">
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp">
         </TextView>
 
         <TextView
             android:id="@+id/acc_casualties"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#9E9E9E"
             android:text="Casualties"
             android:textSize="12sp"
             android:layout_below="@id/acc_date"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="120dp">
+            android:layout_marginEnd="120dp"
+            android:layout_marginBottom="8dp">
 
         </TextView>
 

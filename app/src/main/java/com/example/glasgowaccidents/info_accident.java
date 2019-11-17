@@ -2,6 +2,7 @@ package com.example.glasgowaccidents;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -9,6 +10,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 
 import java.util.ArrayList;
 
@@ -30,6 +32,9 @@ public class info_accident extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_accident);
 
+        Toolbar toolbar_info = findViewById(R.id.toolbar_info);
+        toolbar_info.setTitle("Accident Information");
+        setSupportActionBar(toolbar_info);
 
         Bundle bundle = getIntent().getExtras();
         String acc = bundle.getString("acc");
@@ -71,40 +76,14 @@ public class info_accident extends AppCompatActivity {
         mRecyclerView_info.setLayoutManager(mLayoutManager_info);
         mRecyclerView_info.setAdapter(mAdapter_info);
 
-        mRecyclerView_info.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                visibleItemCount = mRecyclerView_info.getChildCount();
-                totalItemCount = mLayoutManager_info.getItemCount();
-                firstVisibleItem = mLayoutManager_info.findFirstVisibleItemPosition();
-
-                if (loading) {
-                    if (totalItemCount > previousTotal) {
-                        loading = false;
-                        previousTotal = totalItemCount;
-                    }
-                }
-                if (!loading && (totalItemCount - visibleItemCount)
-                        <= (firstVisibleItem + visibleThreshold)) {
-                    // End has been reached
-
-                    pagination();
-                }
-            }
-        });
-
-
     }
 
-    private void pagination(){
-
-        String add_s = Integer.toString(add);
-        mAdapter_info.notifyDataSetChanged();
-        add = add + 1;
-        Log.d("TAG", add_s);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_item, menu);
+        return true;
     }
+    
 
     private Cursor getInfo(String where) {
         return mDatabase_info.query("table_1",

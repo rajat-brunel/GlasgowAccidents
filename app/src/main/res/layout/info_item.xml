@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             android:text="test1"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#FF3366"
+            android:textColor="#9E9E9E"
             android:textIsSelectable="true" />
 
         <TextView
@@ -22,7 +22,8 @@
             android:layout_height="wrap_content"
             android:text="test2"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#993366"
+            android:textColor="#F5F5F5"
+            android:layout_marginStart="6dp"
             android:textIsSelectable="true" />
 
 </LinearLayout>
