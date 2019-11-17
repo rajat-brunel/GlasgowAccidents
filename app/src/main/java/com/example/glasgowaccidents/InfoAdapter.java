@@ -14,10 +14,11 @@ import java.util.ArrayList;
 
 public class InfoAdapter extends RecyclerView.Adapter<InfoAdapter.InfoViewHolder> {
 
-    private ArrayList<card_accident_item> mAccidentList;
+    private ArrayList<information_item> mAccident_info;
 
-    public InfoAdapter(ArrayList<card_accident_item> accidentList){
-        mAccidentList = accidentList;
+
+    public InfoAdapter(ArrayList<information_item> accidentList){
+        mAccident_info = accidentList;
 
     }
 
@@ -45,7 +46,7 @@ public class InfoAdapter extends RecyclerView.Adapter<InfoAdapter.InfoViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull InfoViewHolder holder, int position) {
-        card_accident_item currentItem = mAccidentList.get(position);
+        information_item currentItem = mAccident_info.get(position);
 
 
         holder.mTextView1_info.setText(currentItem.getText1());
@@ -55,7 +56,7 @@ public class InfoAdapter extends RecyclerView.Adapter<InfoAdapter.InfoViewHolder
 
     @Override
     public int getItemCount() {
-        return mAccidentList.size();
+        return mAccident_info.size();
     }
 
 }

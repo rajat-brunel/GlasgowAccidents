@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,8 +23,13 @@ public class List_accidents extends AppCompatActivity {
 
     private int previousTotal = 0;
     private boolean loading = true;
-    private int visibleThreshold = 5;
+    private int visibleThreshold = 1;
     int firstVisibleItem, visibleItemCount, totalItemCount;
+    ArrayList<card_accident_item> acc_list = new ArrayList<>();
+    Cursor page;
+    String where;
+    String limit;
+    int offset;
 
 
     @Override
@@ -34,11 +40,18 @@ public class List_accidents extends AppCompatActivity {
 
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         mDatabase = dbHelper.getWritableDatabase();
+        limit = ",15";
+        offset = 0;
+
 
         mRecyclerView = findViewById(R.id.accidents_recyclerView);
         mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new AccidentsAdapter(this,getItems());
+        page = getItems("0,15");
 
+        addData(page);
+
+        mAdapter = new AccidentsAdapter(acc_list,this);
+        where = "Accident_Severity = 'Serious'";
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
@@ -62,26 +75,70 @@ public class List_accidents extends AppCompatActivity {
                         <= (firstVisibleItem + visibleThreshold)) {
                     // End has been reached
 
-                    Log.d("Yaeye!", "end called");
-                    Toast.makeText(List_accidents.this, "Scrolled!!", Toast.LENGTH_SHORT).show();
-
-                    // Do something
-                    mAdapter.notifyDataSetChanged();
-                    loading = true;
+                        pagination();
                 }
             }
         });
     }
 
+    private void pagination(){
+        Toast.makeText(List_accidents.this, "Loaded More!", Toast.LENGTH_SHORT).show();
+        offset = offset +15;
+        String value = Integer.toString(offset) + limit;
+        page = getItems(value);
+        loading = true;
+
+        addData(page);
+
+        mAdapter.notifyDataSetChanged();
+    }
 
 
-    private Cursor getItems() {
+
+    private Cursor getItems(String limit) {
         return mDatabase.query("table_1",
                 null,
                 null,
                 null,
                 null,
                 null,
-                null);
+                null,
+                limit);
     }
+
+    private Cursor getItems_where(String where) {
+        return mDatabase.query("table_1",
+                null,
+                where,
+                null,
+                null,
+                null,
+                null,
+                "0,10");
+    }
+
+    private void addData(Cursor cursor){
+        if (cursor != null) {
+
+            //more to the first row
+            cursor.moveToFirst();
+
+            //iterate over rows
+            for (int i = 0; i < cursor.getCount(); i++) {
+
+
+                String ind  = cursor.getString(cursor.getColumnIndex("Accident_Index"));
+                String date = cursor.getString(cursor.getColumnIndex("Date"));
+                String severe = cursor.getString(cursor.getColumnIndex("Accident_Severity"));
+                String casualty = cursor.getString(cursor.getColumnIndex("Number_of_Casualties"));
+
+
+                acc_list.add(new card_accident_item(ind,date,severe,casualty));
+
+                page.moveToNext();
+            }
+            page.close();
+        }
+    }
+
 }

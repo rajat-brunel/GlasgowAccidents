@@ -1,5 +1,6 @@
 package com.example.glasgowaccidents;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +18,12 @@ public class info_accident extends AppCompatActivity {
     private RecyclerView mRecyclerView_info;
     private RecyclerView.Adapter mAdapter_info;
     private LinearLayoutManager mLayoutManager_info;
+    private int previousTotal = 0;
+    private boolean loading = true;
+    private int visibleThreshold = 5;
+    int firstVisibleItem, visibleItemCount, totalItemCount;
+    ArrayList<information_item> exampleList = new ArrayList<>();
+    int add = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +42,6 @@ public class info_accident extends AppCompatActivity {
         mRecyclerView_info = findViewById(R.id.info_recyclerView);
         mLayoutManager_info = new LinearLayoutManager(this);
         Cursor c1 = getInfo(where);
-        ArrayList<card_accident_item> exampleList = new ArrayList<>();
 
 
         if (c1 != null) {
@@ -52,9 +58,7 @@ public class info_accident extends AppCompatActivity {
                     String col = c1.getColumnName(j);
                     col = col.replace("_", " ");
                     String val = c1.getString(j);
-
-                    //append the column value to the string builder and delimit by a pipe symbol
-                    exampleList.add(new card_accident_item(col, val));
+                    exampleList.add(new information_item(col, val));
                     Log.d("Column_name", col);
                 }
                 c1.moveToNext();
@@ -67,7 +71,39 @@ public class info_accident extends AppCompatActivity {
         mRecyclerView_info.setLayoutManager(mLayoutManager_info);
         mRecyclerView_info.setAdapter(mAdapter_info);
 
+        mRecyclerView_info.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
 
+                visibleItemCount = mRecyclerView_info.getChildCount();
+                totalItemCount = mLayoutManager_info.getItemCount();
+                firstVisibleItem = mLayoutManager_info.findFirstVisibleItemPosition();
+
+                if (loading) {
+                    if (totalItemCount > previousTotal) {
+                        loading = false;
+                        previousTotal = totalItemCount;
+                    }
+                }
+                if (!loading && (totalItemCount - visibleItemCount)
+                        <= (firstVisibleItem + visibleThreshold)) {
+                    // End has been reached
+
+                    pagination();
+                }
+            }
+        });
+
+
+    }
+
+    private void pagination(){
+
+        String add_s = Integer.toString(add);
+        mAdapter_info.notifyDataSetChanged();
+        add = add + 1;
+        Log.d("TAG", add_s);
     }
 
     private Cursor getInfo(String where) {

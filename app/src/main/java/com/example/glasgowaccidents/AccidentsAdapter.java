@@ -1,5 +1,6 @@
 package com.example.glasgowaccidents;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -12,16 +13,18 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 
 public class AccidentsAdapter extends RecyclerView.Adapter<AccidentsAdapter.AccidentsViewHolder> {
 
+    private ArrayList<card_accident_item> mAccidentList;
     private Context mContext;
-    private Cursor mCursor;
 
 
-    public AccidentsAdapter(Context context, Cursor cursor) {
+    public AccidentsAdapter(ArrayList<card_accident_item> accidentList, Context context) {
+        mAccidentList = accidentList;
         mContext = context;
-        mCursor = cursor;
 
     }
 
@@ -46,21 +49,19 @@ public class AccidentsAdapter extends RecyclerView.Adapter<AccidentsAdapter.Acci
     @NonNull
     @Override
     public AccidentsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(mContext);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.card_item, parent, false);
         return new AccidentsViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull AccidentsViewHolder holder, int position) {
-            if (!mCursor.moveToPosition(position)) {
-                return;
-            }
+            card_accident_item currentItem = mAccidentList.get(position);
 
-            final String acc_index = mCursor.getString(mCursor.getColumnIndex("Accident_Index"));
-            String acc_Date = mCursor.getString(mCursor.getColumnIndex("Date"));
-            String acc_severe = mCursor.getString(mCursor.getColumnIndex("Accident_Severity"));
-            String acc_cas = mCursor.getString(mCursor.getColumnIndex("Number_of_Casualties"));
+            final String acc_index = currentItem.getText1();
+            String acc_Date = currentItem.getText2();
+            String acc_severe = currentItem.getText3();
+            String acc_cas = currentItem.getText4();
 
 
             holder.mTextView1.setText("Index : "+acc_index);
@@ -84,10 +85,10 @@ public class AccidentsAdapter extends RecyclerView.Adapter<AccidentsAdapter.Acci
 
     @Override
     public int getItemCount() {
-        return mCursor.getCount();
+        return mAccidentList.size();
     }
 
-    public void swapCursor(Cursor newCursor) {
+    /**public void swapCursor(Cursor newCursor) {
         if (mCursor != null) {
             mCursor.close();
         }
@@ -97,6 +98,6 @@ public class AccidentsAdapter extends RecyclerView.Adapter<AccidentsAdapter.Acci
         if (newCursor != null) {
             notifyDataSetChanged();
         }
-    }
+    }**/
 
 }
