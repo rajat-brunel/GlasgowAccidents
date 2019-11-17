@@ -17,8 +17,6 @@ public class AccidentsAdapter extends RecyclerView.Adapter<AccidentsAdapter.Acci
 
     private Context mContext;
     private Cursor mCursor;
-    private OnItemClicked onClick;
-
 
 
     public AccidentsAdapter(Context context, Cursor cursor) {
@@ -101,7 +99,4 @@ public class AccidentsAdapter extends RecyclerView.Adapter<AccidentsAdapter.Acci
         }
     }
 
-    public interface OnItemClicked {
-        void onItemClick(int position);
-    }
 }

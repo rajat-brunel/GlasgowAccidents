@@ -82,7 +82,6 @@ public class List_accidents extends AppCompatActivity {
                 null,
                 null,
                 null,
-                null,
-                "0,15");
+                null);
     }
 }
