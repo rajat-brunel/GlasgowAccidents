@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">GlasgowAccidents</string>
-    
+    <string name="heading">GLASGOW ACCIDENTS</string>
+    <string name="subline">Stay Safe on the Road</string>
+
     <string-array name="casualtyList">
         <item>Any</item>
         <item>2</item>

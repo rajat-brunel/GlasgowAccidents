@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background">
+    </ImageView>
+
     <Button
         android:id="@+id/button_landing"
         android:layout_width="wrap_content"
@@ -28,10 +37,39 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="43dp"
         android:text="About"
+        app:strokeColor="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_landing"
         app:layout_constraintVertical_bias="0.166" />
+
+    <TextView
+        android:id="@+id/main_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:gravity="center"
+        android:textColor="#FAFAFA"
+        android:fontFamily="sans-serif-thin"
+        android:textSize="20dp"
+        android:text="@string/heading"
+        app:layout_constraintBottom_toTopOf="@+id/material_text_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/subline"
+        android:textColor="#FAFAFA"
+        android:fontFamily="sans-serif-light"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_head"
+        android:layout_margin="8dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -244,7 +244,7 @@ public class List_accidents extends AppCompatActivity {
         }
     }
 
-    
+
     public void swapCursor(Cursor newCursor) {
         if (page != null) {
             page.close();
