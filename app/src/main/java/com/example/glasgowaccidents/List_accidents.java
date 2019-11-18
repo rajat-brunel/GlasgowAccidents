@@ -33,6 +33,7 @@ public class List_accidents extends AppCompatActivity {
     private int previousTotal = 0;
     private boolean loading = true;
     private int visibleThreshold = 1;
+    private static int firstVisibleInListview;
     int firstVisibleItem, visibleItemCount, totalItemCount;
     ArrayList<card_accident_item> acc_list = new ArrayList<>();
     Cursor page;
@@ -68,28 +69,32 @@ public class List_accidents extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
+        firstVisibleInListview = mLayoutManager.findFirstVisibleItemPosition();
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-                visibleItemCount = mRecyclerView.getChildCount();
-                totalItemCount = mLayoutManager.getItemCount();
-                firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
+                int currentFirstVisible = mLayoutManager.findFirstVisibleItemPosition();
 
-                if (loading) {
-                    if (totalItemCount > previousTotal) {
-                        loading = false;
-                        previousTotal = totalItemCount;
-                    }
-                }
-                if (!loading && (totalItemCount - visibleItemCount)
-                        <= (firstVisibleItem + visibleThreshold)) {
-                    // End has been reached
 
-                        pagination();
+                if(currentFirstVisible > firstVisibleInListview)
+                    Log.i("RecyclerView scrolled: ", "scroll up!");
+                else{
+                    Log.i("RecyclerView scrolled: ", "scroll down!");
+                    pagination();
+                    mAdapter.notifyDataSetChanged();
+                    Toast.makeText(List_accidents.this, "Scrolling", Toast.LENGTH_SHORT).show();
                 }
+
+                firstVisibleInListview = currentFirstVisible;
+
             }
+
         });
     }
 
@@ -104,6 +109,8 @@ public class List_accidents extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.icon_filter:
                 mLayoutManager.scrollToPositionWithOffset(0, 0);
+                swapCursor(page);
+                offset = 0;
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(List_accidents.this, R.style.AlertDialogTheme);
                 View mView = getLayoutInflater().inflate(R.layout.filter_dialog, null);
                 final Spinner mSpinner = mView.findViewById(R.id.spinner_cas);
@@ -117,12 +124,16 @@ public class List_accidents extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if(!mSpinner.getSelectedItem().toString().equalsIgnoreCase("Any")){
-                            Toast.makeText(List_accidents.this,
-                                    "Number_of_Casualties = " +mSpinner.getSelectedItem().toString(),
-                                    Toast.LENGTH_SHORT)
-                                    .show();
                             where = "Number_of_Casualties = " +mSpinner.getSelectedItem().toString();
-                            page = getItems_where(where);
+                            page = getItems("0,20",where);
+                            acc_list.clear();
+                            addData(page);
+                            mAdapter.notifyDataSetChanged();
+                            dialog.dismiss();
+                        }
+                        if(mSpinner.getSelectedItem().toString().equalsIgnoreCase("Any")){
+                            where = null;
+                            page = getItems("0,15",null);
                             acc_list.clear();
                             addData(page);
                             mAdapter.notifyDataSetChanged();
@@ -145,15 +156,15 @@ public class List_accidents extends AppCompatActivity {
     }
 
     private void pagination(){
-        Toast.makeText(List_accidents.this, where, Toast.LENGTH_SHORT).show();
         offset = offset +15;
         String value = Integer.toString(offset) + limit;
-        page = getItems(value, where );
-        loading = true;
+        page = getItems(value, where);
 
+        Log.d("Tag",value);
         addData(page);
 
-        mAdapter.notifyDataSetChanged();
+
+        loading = true;
     }
 
 
@@ -203,5 +214,14 @@ public class List_accidents extends AppCompatActivity {
             page.close();
         }
     }
+
+    public void swapCursor(Cursor newCursor) {
+        if (page != null) {
+            page.close();
+        }
+
+        page = newCursor;
+
+        }
 
 }
