@@ -1,11 +1,14 @@
 package com.example.glasgowaccidents;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,6 +16,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -52,12 +58,12 @@ public class List_accidents extends AppCompatActivity {
 
         mRecyclerView = findViewById(R.id.accidents_recyclerView);
         mLayoutManager = new LinearLayoutManager(this);
-        page = getItems("0,15");
+        page = getItems("0,15",null);
 
         addData(page);
 
         mAdapter = new AccidentsAdapter(acc_list,this);
-        where = "Accident_Severity = 'Serious'";
+        where = null;
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
@@ -97,16 +103,52 @@ public class List_accidents extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.icon_filter:
-                Toast.makeText(this, "Clicked Filter!", Toast.LENGTH_SHORT).show();
+                mLayoutManager.scrollToPositionWithOffset(0, 0);
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(List_accidents.this, R.style.AlertDialogTheme);
+                View mView = getLayoutInflater().inflate(R.layout.filter_dialog, null);
+                final Spinner mSpinner = mView.findViewById(R.id.spinner_cas);
+                ArrayAdapter<String> severeAdapter = new ArrayAdapter<String>(List_accidents.this,
+                        android.R.layout.simple_spinner_item,
+                        getResources().getStringArray(R.array.casualtyList));
+                severeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                mSpinner.setAdapter(severeAdapter);
+
+                mBuilder.setPositiveButton("Filter", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(!mSpinner.getSelectedItem().toString().equalsIgnoreCase("Any")){
+                            Toast.makeText(List_accidents.this,
+                                    "Number_of_Casualties = " +mSpinner.getSelectedItem().toString(),
+                                    Toast.LENGTH_SHORT)
+                                    .show();
+                            where = "Number_of_Casualties = " +mSpinner.getSelectedItem().toString();
+                            page = getItems_where(where);
+                            acc_list.clear();
+                            addData(page);
+                            mAdapter.notifyDataSetChanged();
+                            dialog.dismiss();
+                        }
+                    }
+                });
+
+                mBuilder.setNegativeButton("Dismiss!", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                mBuilder.setView(mView);
+                AlertDialog dialog = mBuilder.create();
+                dialog.show();
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void pagination(){
-        Toast.makeText(List_accidents.this, "Loaded More!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(List_accidents.this, where, Toast.LENGTH_SHORT).show();
         offset = offset +15;
         String value = Integer.toString(offset) + limit;
-        page = getItems(value);
+        page = getItems(value, where );
         loading = true;
 
         addData(page);
@@ -116,10 +158,10 @@ public class List_accidents extends AppCompatActivity {
 
 
 
-    private Cursor getItems(String limit) {
+    private Cursor getItems(String limit, String where) {
         return mDatabase.query("table_1",
                 null,
-                null,
+                where,
                 null,
                 null,
                 null,
@@ -135,7 +177,7 @@ public class List_accidents extends AppCompatActivity {
                 null,
                 null,
                 null,
-                "0,10");
+                "0,15");
     }
 
     private void addData(Cursor cursor){

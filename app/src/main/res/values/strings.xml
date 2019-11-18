@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">GlasgowAccidents</string>
+    
+    <string-array name="casualtyList">
+        <item>Any</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>7</item>
+        <item>29</item>
+    </string-array>
+
+    <string-array name="SeverityList">
+        <item>Any</item>
+        <item>Slight</item>
+        <item>Serious</item>
+        <item>Fatal</item>
+    </string-array>
 </resources>
