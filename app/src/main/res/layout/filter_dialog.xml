@@ -34,4 +34,24 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="4dp"/>
 
+    <TextView
+        android:id="@+id/filter_sev"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#F5F5F5"
+        android:text="Severity"
+        android:layout_below="@+id/spinner_cas"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="12dp"
+        />
+    <Spinner
+        android:id="@+id/spinner_sev"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#F5F5F5"
+        android:background="@color/colorPrimary"
+        android:layout_below="@+id/filter_sev"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"/>
+
 </RelativeLayout>

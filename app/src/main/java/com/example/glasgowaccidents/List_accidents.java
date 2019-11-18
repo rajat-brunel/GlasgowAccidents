@@ -31,10 +31,10 @@ public class List_accidents extends AppCompatActivity {
     private LinearLayoutManager mLayoutManager;
 
     private int previousTotal = 0;
-    private boolean loading = true;
+    private boolean mLoading = false;
     private int visibleThreshold = 1;
     private static int firstVisibleInListview;
-    int firstVisibleItem, visibleItemCount, totalItemCount;
+    int pastVisiblesItems, visibleItemCount, totalItemCount;
     ArrayList<card_accident_item> acc_list = new ArrayList<>();
     Cursor page;
     String where;
@@ -79,19 +79,16 @@ public class List_accidents extends AppCompatActivity {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-                int currentFirstVisible = mLayoutManager.findFirstVisibleItemPosition();
+                int totalItem = mLayoutManager.getItemCount();
+                int lastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
 
-
-                if(currentFirstVisible > firstVisibleInListview)
-                    Log.i("RecyclerView scrolled: ", "scroll up!");
-                else{
-                    Log.i("RecyclerView scrolled: ", "scroll down!");
+                if (!mLoading && lastVisibleItem == totalItem - 1) {
+                    mLoading = true;
                     pagination();
                     mAdapter.notifyDataSetChanged();
-                    Toast.makeText(List_accidents.this, "Scrolling", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(List_accidents.this, "Scrolling", Toast.LENGTH_SHORT).show();
+                    mLoading = false;
                 }
-
-                firstVisibleInListview = currentFirstVisible;
 
             }
 
@@ -107,31 +104,56 @@ public class List_accidents extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
+
             case R.id.icon_filter:
                 mLayoutManager.scrollToPositionWithOffset(0, 0);
                 swapCursor(page);
                 offset = 0;
+
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(List_accidents.this, R.style.AlertDialogTheme);
                 View mView = getLayoutInflater().inflate(R.layout.filter_dialog, null);
+
                 final Spinner mSpinner = mView.findViewById(R.id.spinner_cas);
-                ArrayAdapter<String> severeAdapter = new ArrayAdapter<String>(List_accidents.this,
+                ArrayAdapter<String> casAdapter = new ArrayAdapter<String>(List_accidents.this,
                         android.R.layout.simple_spinner_item,
                         getResources().getStringArray(R.array.casualtyList));
-                severeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                mSpinner.setAdapter(severeAdapter);
+
+                final Spinner mSpinner_sev = mView.findViewById(R.id.spinner_sev);
+                ArrayAdapter<String> sevAdapter = new ArrayAdapter<String>(List_accidents.this,
+                        android.R.layout.simple_spinner_item,
+                        getResources().getStringArray(R.array.severityList));
+
+                casAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                mSpinner.setAdapter(casAdapter);
+
+                sevAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                mSpinner_sev.setAdapter(sevAdapter);
 
                 mBuilder.setPositiveButton("Filter", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if(!mSpinner.getSelectedItem().toString().equalsIgnoreCase("Any")){
-                            where = "Number_of_Casualties = " +mSpinner.getSelectedItem().toString();
-                            page = getItems("0,20",where);
-                            acc_list.clear();
-                            addData(page);
-                            mAdapter.notifyDataSetChanged();
+                        if(!mSpinner.getSelectedItem().toString().equalsIgnoreCase("Any") &&
+                                !mSpinner_sev.getSelectedItem().toString().equalsIgnoreCase("Any")){
+                            String num_Cas = "Number_of_Casualties=" +mSpinner.getSelectedItem().toString();
+                            String acc_severe = "Accident_Severity=" + "'" + mSpinner_sev.getSelectedItem().toString() + "'";
+                            where = num_Cas + " AND " + acc_severe;
+                            clauseWhere(where);
                             dialog.dismiss();
                         }
-                        if(mSpinner.getSelectedItem().toString().equalsIgnoreCase("Any")){
+
+                        else if(!mSpinner.getSelectedItem().toString().equalsIgnoreCase("Any")){
+                            where = "Number_of_Casualties = " +mSpinner.getSelectedItem().toString();
+                            clauseWhere(where);
+                            dialog.dismiss();
+                        }
+
+                        else if(!mSpinner_sev.getSelectedItem().toString().equalsIgnoreCase("Any")){
+                            String sev = "'" + mSpinner_sev.getSelectedItem().toString() + "'";
+                            where = "Accident_Severity=" + sev;
+                            clauseWhere(where);
+                            dialog.dismiss();
+                        }
+                        else if(mSpinner.getSelectedItem().toString().equalsIgnoreCase("Any")){
                             where = null;
                             page = getItems("0,15",null);
                             acc_list.clear();
@@ -139,10 +161,17 @@ public class List_accidents extends AppCompatActivity {
                             mAdapter.notifyDataSetChanged();
                             dialog.dismiss();
                         }
+                        else if(mSpinner_sev.getSelectedItem().toString().equalsIgnoreCase("Any")) {
+                            where = null;
+                            page = getItems("0,15", null);
+                            acc_list.clear();
+                            addData(page);
+                            mAdapter.notifyDataSetChanged();
+                        }
                     }
                 });
 
-                mBuilder.setNegativeButton("Dismiss!", new DialogInterface.OnClickListener() {
+                mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -155,6 +184,7 @@ public class List_accidents extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     private void pagination(){
         offset = offset +15;
         String value = Integer.toString(offset) + limit;
@@ -163,10 +193,7 @@ public class List_accidents extends AppCompatActivity {
         Log.d("Tag",value);
         addData(page);
 
-
-        loading = true;
     }
-
 
 
     private Cursor getItems(String limit, String where) {
@@ -180,6 +207,7 @@ public class List_accidents extends AppCompatActivity {
                 limit);
     }
 
+
     private Cursor getItems_where(String where) {
         return mDatabase.query("table_1",
                 null,
@@ -190,6 +218,7 @@ public class List_accidents extends AppCompatActivity {
                 null,
                 "0,15");
     }
+
 
     private void addData(Cursor cursor){
         if (cursor != null) {
@@ -215,6 +244,7 @@ public class List_accidents extends AppCompatActivity {
         }
     }
 
+    
     public void swapCursor(Cursor newCursor) {
         if (page != null) {
             page.close();
@@ -223,5 +253,12 @@ public class List_accidents extends AppCompatActivity {
         page = newCursor;
 
         }
+
+    private void clauseWhere (String where){
+        page = getItems("0,20",where);
+        acc_list.clear();
+        addData(page);
+        mAdapter.notifyDataSetChanged();
+    }
 
 }
