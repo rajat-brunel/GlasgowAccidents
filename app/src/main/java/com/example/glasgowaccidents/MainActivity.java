@@ -15,12 +15,14 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     Button button_landing;
+    Button button_about;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        button_about = findViewById(R.id.material_text_button);
 
         button_landing = findViewById(R.id.button_landing);
         button_landing.setOnClickListener(new View.OnClickListener() {

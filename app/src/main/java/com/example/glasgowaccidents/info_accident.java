@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -83,7 +84,7 @@ public class info_accident extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_item, menu);
         return true;
     }
-    
+
 
     private Cursor getInfo(String where) {
         return mDatabase_info.query("table_1",
