@@ -35,9 +35,6 @@ public class List_accidentsTest {
     public ActivityTestRule<List_accidents> List_accidentsTestRule =
             new ActivityTestRule<>(List_accidents.class);
 
-    @Rule
-    public IntentsTestRule<List_accidents> intentsTestRule = new IntentsTestRule<>(List_accidents.class);
-
     @Test
     public void recycleTest(){
         onView(withId(R.id.accidents_recyclerView)).perform(
@@ -64,6 +61,12 @@ public class List_accidentsTest {
         String itemVal = "Index : 201897GA00102";
 
         onView(withText(itemVal)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void filterTest(){
+        onView(withId(R.id.icon_filter)).perform(click());
+        onView(withText("Filter")).check(matches(isDisplayed()));
     }
 
 }
