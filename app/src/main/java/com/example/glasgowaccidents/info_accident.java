@@ -23,6 +23,7 @@ public class info_accident extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter_info;
     private LinearLayoutManager mLayoutManager_info;
     ArrayList<information_item> exampleList = new ArrayList<>();
+    String acc;
     int add = 1;
 
     @Override
@@ -46,7 +47,7 @@ public class info_accident extends AppCompatActivity {
 
 
         Bundle bundle = getIntent().getExtras();
-        String acc = bundle.getString("acc");
+        acc = bundle.getString("acc");
         String where = "Accident_Index='"+acc+"'";
 
         DatabaseHelper dbhelper_info = new DatabaseHelper(this);
