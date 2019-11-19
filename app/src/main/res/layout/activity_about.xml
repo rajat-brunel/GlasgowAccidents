@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#E0E0E0"
     tools:context=".about">
 
     <androidx.appcompat.widget.Toolbar
@@ -16,5 +17,82 @@
         android:background="?attr/colorPrimary"
         android:elevation="2dp">
     </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/about_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#E0E0E0"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="24sp"
+        android:padding="8dp"
+        android:background="#757575"
+       />
+
+    <TextView
+        android:id="@+id/about_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:fontFamily="sans-serif"
+        android:background="#E0E0E0"
+        />
+    <TextView
+        android:id="@+id/about_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#E0E0E0"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="24sp"
+        android:padding="8dp"
+        android:background="#757575"
+        />
+
+    <TextView
+        android:id="@+id/about_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:fontFamily="sans-serif"
+        android:background="#E0E0E0"
+        />
+    <TextView
+        android:id="@+id/about_5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#E0E0E0"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="24sp"
+        android:padding="8dp"
+        android:background="#757575"
+        />
+
+    <TextView
+        android:id="@+id/about_6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:fontFamily="sans-serif"
+        android:background="#E0E0E0"
+        />
+    <TextView
+        android:id="@+id/about_7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#E0E0E0"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="24sp"
+        android:padding="8dp"
+        android:background="#757575"
+        />
+
+    <TextView
+        android:id="@+id/about_8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:fontFamily="sans-serif"
+        android:background="#E0E0E0"
+        />
 
 </LinearLayout>

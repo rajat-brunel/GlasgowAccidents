@@ -24,7 +24,7 @@
         android:layout_height="match_parent"
         android:padding="4dp"
         android:scrollbars="vertical"
-        android:background="#000000"
+        android:background="#212121"
         />
 
 </LinearLayout>

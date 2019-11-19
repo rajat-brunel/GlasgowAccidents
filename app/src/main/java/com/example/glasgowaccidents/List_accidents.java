@@ -30,11 +30,8 @@ public class List_accidents extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private LinearLayoutManager mLayoutManager;
 
-    private int previousTotal = 0;
     private boolean mLoading = false;
-    private int visibleThreshold = 1;
-    private static int firstVisibleInListview;
-    int pastVisiblesItems, visibleItemCount, totalItemCount;
+
     ArrayList<card_accident_item> acc_list = new ArrayList<>();
     Cursor page;
     String where;
@@ -79,7 +76,6 @@ public class List_accidents extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
-        firstVisibleInListview = mLayoutManager.findFirstVisibleItemPosition();
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {

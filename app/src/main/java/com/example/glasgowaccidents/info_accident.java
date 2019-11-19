@@ -22,10 +22,6 @@ public class info_accident extends AppCompatActivity {
     private RecyclerView mRecyclerView_info;
     private RecyclerView.Adapter mAdapter_info;
     private LinearLayoutManager mLayoutManager_info;
-    private int previousTotal = 0;
-    private boolean loading = true;
-    private int visibleThreshold = 5;
-    int firstVisibleItem, visibleItemCount, totalItemCount;
     ArrayList<information_item> exampleList = new ArrayList<>();
     int add = 1;
 
