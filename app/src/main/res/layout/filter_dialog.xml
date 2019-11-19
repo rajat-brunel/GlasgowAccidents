@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="@color/colorPrimary">
+    >
 
     <TextView
         android:id="@+id/filter_title"
@@ -28,8 +28,10 @@
         android:id="@+id/spinner_cas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#F5F5F5"
-        android:background="@color/colorPrimary"
+        android:popupBackground="#424242"
+        android:backgroundTint="#FFFFFF"
+        android:theme="@style/spinnerTheme"
+        android:popupTheme="@android:style/ThemeOverlay.Material.Dark"
         android:layout_below="@+id/filter_cas"
         android:layout_marginStart="12dp"
         android:layout_marginTop="4dp"/>
@@ -47,9 +49,10 @@
     <Spinner
         android:id="@+id/spinner_sev"
         android:layout_width="match_parent"
+        android:popupBackground="#424242"
+        android:backgroundTint="#FFFFFF"
+        android:popupTheme="@android:style/ThemeOverlay.Material.Dark"
         android:layout_height="wrap_content"
-        android:textColor="#F5F5F5"
-        android:background="@color/colorPrimary"
         android:layout_below="@+id/filter_sev"
         android:layout_marginStart="12dp"
         android:layout_marginTop="4dp"/>

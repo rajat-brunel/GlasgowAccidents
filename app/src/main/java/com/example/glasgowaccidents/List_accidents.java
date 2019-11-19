@@ -51,6 +51,16 @@ public class List_accidents extends AppCompatActivity {
         toolbar.setTitle("Accident List");
         setSupportActionBar(toolbar);
 
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                onBackPressed();
+            }
+        });
+
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         mDatabase = dbHelper.getWritableDatabase();
         limit = ",15";
@@ -115,12 +125,12 @@ public class List_accidents extends AppCompatActivity {
 
                 final Spinner mSpinner = mView.findViewById(R.id.spinner_cas);
                 ArrayAdapter<String> casAdapter = new ArrayAdapter<String>(List_accidents.this,
-                        android.R.layout.simple_spinner_item,
+                        R.layout.spin_item,
                         getResources().getStringArray(R.array.casualtyList));
 
                 final Spinner mSpinner_sev = mView.findViewById(R.id.spinner_sev);
                 ArrayAdapter<String> sevAdapter = new ArrayAdapter<String>(List_accidents.this,
-                        android.R.layout.simple_spinner_item,
+                        R.layout.spin_item,
                         getResources().getStringArray(R.array.severityList));
 
                 casAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

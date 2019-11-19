@@ -88,16 +88,5 @@ public class AccidentsAdapter extends RecyclerView.Adapter<AccidentsAdapter.Acci
         return mAccidentList.size();
     }
 
-    /**public void swapCursor(Cursor newCursor) {
-        if (mCursor != null) {
-            mCursor.close();
-        }
-
-        mCursor = newCursor;
-
-        if (newCursor != null) {
-            notifyDataSetChanged();
-        }
-    }**/
 
 }

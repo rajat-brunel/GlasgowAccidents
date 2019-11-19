@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -37,6 +38,17 @@ public class info_accident extends AppCompatActivity {
         toolbar_info.setTitle("Accident Information");
         setSupportActionBar(toolbar_info);
 
+        toolbar_info.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+
+        toolbar_info.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                onBackPressed();
+            }
+        });
+
+
         Bundle bundle = getIntent().getExtras();
         String acc = bundle.getString("acc");
         String where = "Accident_Index='"+acc+"'";
@@ -59,7 +71,7 @@ public class info_accident extends AppCompatActivity {
             for (int i = 0; i < c1.getCount(); i++) {
 
                 //iterate over the columns
-                for (int j = 0; j < c1.getColumnCount(); j++) {
+                for (int j = 0; j < c1.getColumnCount()-2; j++) {
 
                     String col = c1.getColumnName(j);
                     col = col.replace("_", " ");
