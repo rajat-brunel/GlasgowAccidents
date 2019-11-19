@@ -48,26 +48,26 @@ public class about extends AppCompatActivity {
         mTextViewAbout_7 = findViewById(R.id.about_7);
         mTextViewAbout_8 = findViewById(R.id.about_8);
 
-        String about_q1 = "What is this app about ?";
-        String about_a1 = "This app shows statistics about road accidents in Glasgow in 2018, the data is" +
-                "captured via Glasgow open Data, and presented in a mobile readable format." +
-                "The Original data could be found at the UK Government Data portal data.gov.uk";
+        String about_q1 = "Q. What is this app about ?";
+        String about_a1 = "This app shows statistics about road accidents in Glasgow in 2018, the data is " +
+                "captured via Glasgow open Data, and presented in a mobile readable format. " +
+                "The Original data could be found at the UK Government Data portal (data.gov.uk).";
 
-        String about_q2 = "How to look up the Accident List?";
-        String about_a2 = "Taping on the Accident List button on the landing page will take you to" +
-                "the accident list page, all the accidents are listed on this place, ordered by their" +
-                "Index,each accident shows the Date the accident occurred, the Number of Casualty" +
-                "and the Severity of the accident. As pagination has been implemented, if you scroll" +
+        String about_q2 = "Q. How to look up the Accident List?";
+        String about_a2 = "Taping on the Accident List button on the landing page will take you to " +
+                "the accident list page, all the accidents are listed on this page, ordered by their " +
+                "Index number,each accident shows the Date the accident occurred, the Number of Casualty " +
+                "and the Severity of the accident. As pagination has been implemented, if you scroll " +
                 "down, more data will be loaded automatically, if available.";
 
-        String about_q3 = "Are there any filters available?";
-        String about_a3 = "To find the information you need quicker, 2 filters have been implemented."+
-                "The list can be filtered by Number of Casualties and The Severity of Accidents.";
+        String about_q3 = "Q. Are there any filters available?";
+        String about_a3 = "To find the information you need quicker, 2 filters have been implemented. "+
+                "The list can be filtered by Number of Casualties and The Severity of Accidents. ";
 
-        String about_q4 = "How to get more information about a specific Accident ?";
-        String about_a4 = "To get more information about an accident, simply long press on the accident" +
-                "you want more information about, and a new page will open, showing extensive information" +
-                "about that accident.";
+        String about_q4 = "Q. How to get more information about a specific Accident ? ";
+        String about_a4 = "To get more information about an accident, simply long press on the accident " +
+                "you want more information about, and a new page will open, showing extensive information " +
+                "about that particular accident.";
 
         mTextViewAbout_1.setText(about_q1);
         mTextViewAbout_2.setText(about_a1);

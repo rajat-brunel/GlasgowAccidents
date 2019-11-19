@@ -15,7 +15,7 @@ import java.io.OutputStream;
 
 public class DatabaseHelper extends  SQLiteOpenHelper {
 
-    private static String DB_NAME = "accidents_data.db";
+    public static final String DB_NAME = "accidents_data.db";
     private SQLiteDatabase myDataBase;
     private final Context myContext;
 
@@ -27,9 +27,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         super(context, DB_NAME, null, 1);
 
         this.myContext = context;
-        // Check for and create (copy DB from assets) when constructing the DBHelper
-        //this.DB_PATH = "/data/data/" + context.getPackageName() + "/" + "databases/";
-        //Log.e("Path 1", DB_PATH+DB_NAME);
         if (!checkDataBase()){
             bytes_copied = 0;
             blocks_copied = 0;
@@ -54,14 +51,13 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                     db.delete();
                 }
                 e.printStackTrace();
-                throw new Error("Error copying database");
+                throw new Error("Error copying database!");
             }
         }
     }
 
     private boolean checkDataBase() {
         File db = new File(myContext.getDatabasePath(DB_NAME).getPath()); //Get the file name of the database
-        Log.d("DBPATH","DB Path is " + db.getPath()); //TODO remove for Live App
         if (db.exists()) return true; // If it exists then return doing nothing
 
         // Get the parent (directory in which the database file would be)
@@ -83,11 +79,9 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     private void copyDataBase() throws IOException {
 
         final String TAG = "COPYDATABASE";
-        Log.d(TAG,"Initiated Copy of the database file " + DB_NAME + " from the assets folder."); //TODO remove for Live App
 
         InputStream myInput = myContext.getAssets().open(DB_NAME); // Open the Asset file
         String dbpath  = myContext.getDatabasePath(DB_NAME).getPath();
-        Log.d(TAG,"Asset file " + DB_NAME + " found so attmepting to copy to " + dbpath); //TODO remove for Live App
 
         File outfile = new File(myContext.getDatabasePath(DB_NAME).toString());
         if (!outfile.getParentFile().exists()) {
@@ -128,18 +122,20 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     @Override
     public void onConfigure(SQLiteDatabase db) {
         super.onConfigure(db);
-        //Log.d("DBCONFIGURE","Database has been configured "); //TODO remove for Live App
-        db.disableWriteAheadLogging(); //<<<<<<<<<< un-comment to force journal mode
+
+        db.disableWriteAheadLogging();
     }
 
     @Override
     public void onOpen(SQLiteDatabase db) {
         super.onOpen(db);
-        Log.d("DBOPENED","Database has been opened."); //TODO remove for live App
+
     }
 
-    public Cursor query(String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy) {
-        return myDataBase.query(table, null, null, null, null, null, null);
+    public Cursor query(String table, String[] columns, String selection,
+                        String[] selectionArgs, String groupBy, String having, String orderBy) {
+        return myDataBase.query(table, null, null,
+                null, null, null, null);
     }
 
 }

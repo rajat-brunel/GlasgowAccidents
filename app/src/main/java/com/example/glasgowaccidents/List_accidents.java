@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -69,9 +70,12 @@ public class List_accidents extends AppCompatActivity {
         page = getItems("0,15",null);
 
         addData(page);
+        boolean open = mDatabase.isOpen();
+        String open1 = Boolean.toString(open);
 
         mAdapter = new AccidentsAdapter(acc_list,this);
         where = null;
+        Log.d("Tag-db",open1);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
@@ -186,7 +190,9 @@ public class List_accidents extends AppCompatActivity {
                 mBuilder.setView(mView);
                 AlertDialog dialog = mBuilder.create();
                 dialog.show();
+
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -213,17 +219,6 @@ public class List_accidents extends AppCompatActivity {
                 limit);
     }
 
-
-    private Cursor getItems_where(String where) {
-        return mDatabase.query("table_1",
-                null,
-                where,
-                null,
-                null,
-                null,
-                null,
-                "0,15");
-    }
 
 
     private void addData(Cursor cursor){
