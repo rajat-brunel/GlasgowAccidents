@@ -2,6 +2,11 @@
     <string name="app_name">Glasgow Accidents</string>
     <string name="heading">GLASGOW ACCIDENTS</string>
     <string name="subline">Stay Safe on the Road</string>
+    <string name="landing_button">Accident List</string>
+    <string name="about_button">About</string>
+    <string name="Filter_Title">Filters</string>
+    <string name="Filter_1">Casualties</string>
+    <string name="Filter_2">Severity</string>
 
     <string-array name="casualtyList">
         <item>Any</item>

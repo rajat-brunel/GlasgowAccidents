@@ -25,6 +25,7 @@ public class about extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
+        // Sets Custom Toolbar with back button
         Toolbar toolbar = findViewById(R.id.toolbar_about);
         toolbar.setTitle("About");
         setSupportActionBar(toolbar);
@@ -39,6 +40,9 @@ public class about extends AppCompatActivity {
             }
         });
 
+        /**
+         * This is a text based class - no functionality present
+         */
         mTextViewAbout_1 = findViewById(R.id.about_1);
         mTextViewAbout_2 = findViewById(R.id.about_2);
         mTextViewAbout_3 = findViewById(R.id.about_3);

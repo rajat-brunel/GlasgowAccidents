@@ -81,7 +81,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         final String TAG = "COPYDATABASE";
 
         InputStream myInput = myContext.getAssets().open(DB_NAME); // Open the Asset file
-        String dbpath  = myContext.getDatabasePath(DB_NAME).getPath();
+        //String dbpath  = myContext.getDatabasePath(DB_NAME).getPath();
 
         File outfile = new File(myContext.getDatabasePath(DB_NAME).toString());
         if (!outfile.getParentFile().exists()) {
@@ -130,12 +130,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     public void onOpen(SQLiteDatabase db) {
         super.onOpen(db);
 
-    }
-
-    public Cursor query(String table, String[] columns, String selection,
-                        String[] selectionArgs, String groupBy, String having, String orderBy) {
-        return myDataBase.query(table, null, null,
-                null, null, null, null);
     }
 
 }

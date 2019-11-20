@@ -15,7 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-
+/**
+ * Adapter class for Accident List page, adds data to the views
+ */
 public class AccidentsAdapter extends RecyclerView.Adapter<AccidentsAdapter.AccidentsViewHolder> {
 
     private ArrayList<card_accident_item> mAccidentList;

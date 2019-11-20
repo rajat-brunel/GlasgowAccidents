@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#F5F5F5"
-        android:text="Filters"
+        android:text="@string/Filter_Title"
         android:layout_marginBottom="12dp"
         />
 
@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#F5F5F5"
-        android:text="Casualties"
+        android:text="@string/Filter_1"
         android:layout_below="@+id/filter_title"
         android:layout_marginTop="12dp"
         android:layout_marginStart="12dp"
@@ -41,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#F5F5F5"
-        android:text="Severity"
+        android:text="@string/Filter_2"
         android:layout_below="@+id/spinner_cas"
         android:layout_marginTop="16dp"
         android:layout_marginStart="12dp"

@@ -35,6 +35,7 @@ public class List_accidents extends AppCompatActivity {
 
     ArrayList<card_accident_item> acc_list = new ArrayList<>();
     Cursor page;
+    // create variable used for sql queries
     String where;
     String limit;
     int offset;
@@ -46,6 +47,7 @@ public class List_accidents extends AppCompatActivity {
         setContentView(R.layout.activity_list_accidents);
         setToolbar();
 
+        //Open a connection to the database
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         mDatabase = dbHelper.getWritableDatabase();
         limit = ",15";
@@ -54,6 +56,8 @@ public class List_accidents extends AppCompatActivity {
 
         mRecyclerView = findViewById(R.id.accidents_recyclerView);
         mLayoutManager = new LinearLayoutManager(this);
+
+        //gets info from the database using queries
         page = getItems("0,15",null);
 
         addData(page);
@@ -89,6 +93,8 @@ public class List_accidents extends AppCompatActivity {
         });
     }
 
+
+    // Filter Dialog box implementation
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -100,6 +106,7 @@ public class List_accidents extends AppCompatActivity {
         switch (item.getItemId()){
 
             case R.id.icon_filter:
+                // reset views and cursor
                 mLayoutManager.scrollToPositionWithOffset(0, 0);
                 swapCursor(page);
                 offset = 0;
@@ -107,11 +114,13 @@ public class List_accidents extends AppCompatActivity {
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(List_accidents.this, R.style.AlertDialogTheme);
                 View mView = getLayoutInflater().inflate(R.layout.filter_dialog, null);
 
+                //Casualty drop down option
                 final Spinner mSpinner = mView.findViewById(R.id.spinner_cas);
                 ArrayAdapter<String> casAdapter = new ArrayAdapter<String>(List_accidents.this,
                         R.layout.spin_item,
                         getResources().getStringArray(R.array.casualtyList));
 
+                //Severity drop down option
                 final Spinner mSpinner_sev = mView.findViewById(R.id.spinner_sev);
                 ArrayAdapter<String> sevAdapter = new ArrayAdapter<String>(List_accidents.this,
                         R.layout.spin_item,
@@ -180,7 +189,9 @@ public class List_accidents extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
+    /**A function adds pagination to the page
+     *  calls the getItems class to query for more data as required
+     **/
     private void pagination(){
         offset = offset +15;
         String value = Integer.toString(offset) + limit;
@@ -192,6 +203,8 @@ public class List_accidents extends AppCompatActivity {
     }
 
 
+    /**A function which queries the database and returns a cursor
+     **/
     private Cursor getItems(String limit, String where) {
         return mDatabase.query("table_1",
                 null,
@@ -204,7 +217,9 @@ public class List_accidents extends AppCompatActivity {
     }
 
 
-
+    /**A function which takes the cursor data and
+     * adds the required field to the card_accident_item array
+     **/
     private void addData(Cursor cursor){
         if (cursor != null) {
 
@@ -230,6 +245,9 @@ public class List_accidents extends AppCompatActivity {
     }
 
 
+    /**A function which takes the current cursor,
+     *  closes it, and creates a fresh new cursor
+     **/
     public void swapCursor(Cursor newCursor) {
         if (page != null) {
             page.close();
@@ -239,6 +257,10 @@ public class List_accidents extends AppCompatActivity {
 
         }
 
+
+    /**A function which takes a WHERE SQL query as string,
+     *  and passes it to the getItems function to query the database
+     **/
     private void clauseWhere (String where){
         page = getItems("0,20",where);
         acc_list.clear();
@@ -247,6 +269,8 @@ public class List_accidents extends AppCompatActivity {
     }
 
 
+    /**A function used to set a Custom Toolbar with a back and a filter button
+     **/
     private void setToolbar(){
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Accident List");

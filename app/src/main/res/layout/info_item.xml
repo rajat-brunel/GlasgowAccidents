@@ -12,7 +12,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
-            android:text="test1"
             android:textColor="#9E9E9E"
             android:textIsSelectable="true" />
 
@@ -20,8 +19,6 @@
             android:id="@+id/row_val"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="test2"
-
             android:fontFamily="sans-serif-medium"
             android:textColor="#F5F5F5"
             android:layout_marginStart="6dp"

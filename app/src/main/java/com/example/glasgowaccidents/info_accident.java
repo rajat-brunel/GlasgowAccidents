@@ -32,6 +32,7 @@ public class info_accident extends AppCompatActivity {
 
         setToolbar();
 
+        // Get Accident Index from the "list_accidents" page
         Bundle bundle = getIntent().getExtras();
         acc = bundle.getString("acc");
         String where = "Accident_Index='"+acc+"'";
@@ -81,6 +82,8 @@ public class info_accident extends AppCompatActivity {
     }
 
 
+    /**A function which queries the database and returns a cursor
+    **/
     private Cursor getInfo(String where) {
         return mDatabase_info.query("table_1",
                 null,
@@ -92,6 +95,8 @@ public class info_accident extends AppCompatActivity {
     }
 
 
+    /**A function used to set a Custom Toolbar with back button
+     **/
     private void setToolbar(){
         Toolbar toolbar_info = findViewById(R.id.toolbar_info);
         toolbar_info.setTitle("Accident Information");
