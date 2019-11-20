@@ -24,27 +24,13 @@ public class info_accident extends AppCompatActivity {
     private LinearLayoutManager mLayoutManager_info;
     ArrayList<information_item> exampleList = new ArrayList<>();
     String acc;
-    int add = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_accident);
 
-        Toolbar toolbar_info = findViewById(R.id.toolbar_info);
-        toolbar_info.setTitle("Accident Information");
-        setSupportActionBar(toolbar_info);
-
-        toolbar_info.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
-
-        toolbar_info.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                onBackPressed();
-            }
-        });
-
+        setToolbar();
 
         Bundle bundle = getIntent().getExtras();
         acc = bundle.getString("acc");
@@ -103,5 +89,22 @@ public class info_accident extends AppCompatActivity {
                 null,
                 null,
                 null);
+    }
+
+
+    private void setToolbar(){
+        Toolbar toolbar_info = findViewById(R.id.toolbar_info);
+        toolbar_info.setTitle("Accident Information");
+        setSupportActionBar(toolbar_info);
+
+        toolbar_info.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+
+        toolbar_info.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                onBackPressed();
+            }
+        });
     }
 }

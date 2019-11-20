@@ -1,5 +1,9 @@
 package com.example.glasgowaccidents;
 
+/**
+ * POJO class for Accident Information Page
+ */
+
 public class information_item {
 
     private String mText1;

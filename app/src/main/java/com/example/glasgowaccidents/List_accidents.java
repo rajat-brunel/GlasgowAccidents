@@ -44,20 +44,7 @@ public class List_accidents extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_accidents);
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Accident List");
-        setSupportActionBar(toolbar);
-
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                onBackPressed();
-            }
-        });
+        setToolbar();
 
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         mDatabase = dbHelper.getWritableDatabase();
@@ -70,12 +57,9 @@ public class List_accidents extends AppCompatActivity {
         page = getItems("0,15",null);
 
         addData(page);
-        boolean open = mDatabase.isOpen();
-        String open1 = Boolean.toString(open);
 
         mAdapter = new AccidentsAdapter(acc_list,this);
         where = null;
-        Log.d("Tag-db",open1);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
@@ -261,5 +245,23 @@ public class List_accidents extends AppCompatActivity {
         addData(page);
         mAdapter.notifyDataSetChanged();
     }
+
+
+    private void setToolbar(){
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Accident List");
+        setSupportActionBar(toolbar);
+
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                onBackPressed();
+            }
+        });
+
+}
 
 }

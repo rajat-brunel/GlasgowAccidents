@@ -1,5 +1,10 @@
 package com.example.glasgowaccidents;
 
+/**
+ * POJO class for List Accident page
+ */
+
+
 public class card_accident_item {
 
     private String mText1;
